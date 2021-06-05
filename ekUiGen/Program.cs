@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -148,7 +148,7 @@ namespace ekUiGen
                 }
 
                 string relativeDirectory = file.Remove(0, inputDirectory.Length).TrimStart(Path.DirectorySeparatorChar);
-                string outputFile = Path.Combine(outputDirectory, relativeDirectory) + ".cs";                
+                string outputFile = Path.Combine(outputDirectory, relativeDirectory) + ".g.cs";                
 
                 try
                 {
@@ -162,7 +162,7 @@ namespace ekUiGen
 
                 if (generateBindings)
                 {
-                    outputFile = Path.Combine(outputDirectory, relativeDirectory) + "_bindings.cs";
+                    outputFile = Path.Combine(outputDirectory, relativeDirectory) + "_bindings.g.cs";
                     BindingGenerator.Instance.GenerateFile(outputFile);
                 }
             }
