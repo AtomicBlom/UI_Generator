@@ -3,6 +3,7 @@
 	<Import Project="..\Branding.targets" />
 
 	<PropertyGroup>
+		<OutputType>Exe</OutputType>
 		<TargetFramework>net5.0-windows</TargetFramework>
 	</PropertyGroup>
 
