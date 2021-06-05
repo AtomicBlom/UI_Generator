@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,13 +35,13 @@ namespace ekUiGen
 
             var optionSet = new OptionSet()
                 .Add("?|help|h", "Command line help", o => showHelp = o != null)
-                .Add<string>("i|input=", "Input directory with XAML files", o => inputDirectory = o)
-                .Add<string>("o|output=", "Output directory for .cs files", o => outputDirectory = o)
+                .Add<string>("i|input=", "Input directory with XAML files", o => inputDirectory = Path.GetFullPath(o))
+                .Add<string>("o|output=", "Output directory for .cs files", o => outputDirectory = Path.GetFullPath(o))
                 .Add("no-copy-images", "Do not copy generated image assets (ignores input asset directory)", o => ignoreImageAssets = o != null)
                 .Add("no-fonts", "Do not generate font assets (may lead to broken output)", o => ignoreFontAssets = o != null)
                 .Add("ignore-assets", "Ignore all asset files and just generate .xaml.cs files", o => ignoreImageAssets = ignoreFontAssets = o != null)
-                .Add<string>("ia=", "Input asset directory to copy images from", o => assetInputDirectory = o)
-                .Add<string>("oa=", "Output Asset directory for generated sprite fonts and images", o => assetOutputDirectory = o)
+                .Add<string>("ia=", "Input asset directory to copy images from", o => assetInputDirectory = Path.GetFullPath(o))
+                .Add<string>("oa=", "Output Asset directory for generated sprite fonts and images", o => assetOutputDirectory = Path.GetFullPath(o))
                 .Add<RenderMode>("rm=",
                     String.Format("Render mode ({0})", String.Join(", ", Enum.GetNames(typeof(RenderMode)))),
                     o => renderMode = o)
