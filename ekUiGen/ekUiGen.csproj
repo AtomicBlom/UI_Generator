@@ -10,7 +10,9 @@
 	<ItemGroup>
 		<None Remove="EmptyKeys.UserInterface.targets" />
 		<None Remove="New EmptyKeys UI.zip" />
+		<None Remove="SpriteFontTemplate.pdxfnt" />
 		<None Remove="SpriteFontTemplate.xkfnt" />
+		<None Remove="SpriteFontTemplate.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -20,8 +22,14 @@
 		<Content Include="New EmptyKeys UI.zip">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<Content Include="SpriteFontTemplate.pdxfnt">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Content Include="SpriteFontTemplate.xkfnt">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="SpriteFontTemplate.xml">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
 
