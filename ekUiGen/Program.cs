@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -46,7 +47,7 @@ namespace ekUiGen
                     String.Format("Render mode ({0})", String.Join(", ", Enum.GetNames(typeof(RenderMode)))),
                     o => renderMode = o)
                 .Add<string>("ns|namespace=", "The namespace to generate the code under", o => desiredNamespace = o)
-                .Add<string>("bd|buildDir=", "Directory for additional assemblies", o => buildDir = o)
+                .Add<string>("bd|buildDir=", "Directory for additional assemblies", o => buildDir = Path.GetFullPath(o))
                 .Add("generate-bindings", "Generate data bindings", o => generateBindings = o != null)
                 .Add<string>("da|defaultAssembly=", "Assembly name to use for clr-namespaces without an assembly", o => defaultAssembly = o)
                 .Add<string>("header=", "Header file for generated .cs files", o => headerFile = o)
@@ -121,8 +122,31 @@ namespace ekUiGen
 
             if (!string.IsNullOrEmpty(buildDir))
             {
-                Console.WriteLine("Copy of additional assemblies...");                
-                CopyDirectory(buildDir, Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), true);
+                AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+                {
+                    var assemblyFile = Path.Combine(buildDir, $"{args.Name.Split(',').First()}.dll");
+
+                    try
+                    {
+                        var loadFile = Assembly.LoadFile(assemblyFile);
+                        Console.WriteLine($"loaded assembly {assemblyFile}");
+
+                        return loadFile;
+                    }
+                    catch (Exception e)
+                    {
+                        if (assemblyFile.EndsWith(".resources.dll"))
+                        {
+                            Console.WriteLine($"Ignored missing resources assembly {assemblyFile}");
+
+                            return null;
+                        }
+
+                        Console.WriteLine($"Could not load assembly {assemblyFile}\n{e.Message}");
+                        Console.WriteLine(e);
+                        return null;
+                    }
+                };
             }
 
             string header = string.Empty;
@@ -192,7 +216,7 @@ namespace ekUiGen
 
             return 0;
         }
-
+        
         private static void Generate(string xamlFile, string outputFile, RenderMode renderMode, string desiredNamespace, string defaultAssembly, string header)
         {
             string xaml = string.Empty;
