@@ -67,8 +67,7 @@ namespace EmptyKeys.UserInterface.Generator
             {
                 return "Source is empty. XAML file is not valid.";
             }
-
-            Console.WriteLine();
+            
             Console.WriteLine("Generating " + inputFileName);
 
             ElementGeneratorType.NameUniqueId = 0;
