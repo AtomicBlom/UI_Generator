@@ -137,8 +137,8 @@ namespace ekUiGen
                     {
                         if (assemblyFile.EndsWith(".resources.dll"))
                         {
-                            Console.WriteLine($"Ignored missing resources assembly {assemblyFile}");
-
+                            //Resource dlls are usually safe to ignore even if they can't load.
+                            //Console.WriteLine($"Ignored missing resources assembly {assemblyFile}");
                             return null;
                         }
 

@@ -16,7 +16,6 @@ namespace EmptyKeys.UserInterface.Designer
     public class ImageButton : Button
     {
         private static readonly Type typeOfThis = typeof(ImageButton);
-        private static DependencyObjectType dependencyType;
 
         /// <summary>
         /// The image normal property
