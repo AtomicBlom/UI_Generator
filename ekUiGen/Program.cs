@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -122,6 +122,14 @@ namespace ekUiGen
 
             if (!string.IsNullOrEmpty(buildDir))
             {
+                foreach (var assembly in Directory.EnumerateFiles(buildDir, "*.dll"))
+                {
+                    try
+                    {
+                        Assembly.LoadFrom(assembly);
+                    } catch {}
+                }
+
                 AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
                 {
                     var assemblyFile = Path.Combine(buildDir, $"{args.Name.Split(',').First()}.dll");
